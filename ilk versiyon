@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iyiOyunOyna.com</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import GamePage from "./GamePage";
+
+function App() {
+  const games = [
+    { name: "Ateş ve Su", slug: "ates-ve-su", description: "2 kişilik klasik macera oyunu." },
+    { name: "Zombi Kaçışı", slug: "zombi-kacisi", description: "Engellerden kaç, zombilerden kurtul!" },
+    { name: "Park Etme Ustası", slug: "park-etme", description: "Dikkatlice arabanı park et." },
+    { name: "Koş Tospik Koş", slug: "kurt-tospik", description: "Komik ve eğlenceli refleks oyunu." },
+    { name: "Basketbol Efsanesi", slug: "basketbol", description: "Serbest atış becerilerini test et!" },
+  ];
+
+  return (
+    <Router>
+      <div className="max-w-5xl mx-auto p-4">
+        <h1 className="text-3xl font-bold mb-6">🎮 iyiOyunOyna.com</h1>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {games.map((game) => (
+                  <Link
+                    to={`/oyun/${game.slug}`}
+                    key={game.slug}
+                    className="border p-4 rounded shadow hover:bg-gray-100"
+                  >
+                    <h2 className="text-xl font-semibold">{game.name}</h2>
+                    <p className="text-sm text-gray-600">{game.description}</p>
+                  </Link>
+                ))}
+              </div>
+            }
+          />
+          <Route path="/oyun/:slug" element={<GamePage />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+import { useParams } from "react-router-dom";
+
+const iframeSources = {
+  "ates-ve-su": "https://html5.gamedistribution.com/9e5ed2f9fa7e42bca591cae424b7428b/?gd_sdk_referrer_url=https://www.oyunskor.com/",
+  "zombi-kacisi": "https://html5.gamedistribution.com/zombi-game-link",
+  "park-etme": "https://html5.gamedistribution.com/parking-game-link",
+  "kurt-tospik": "https://html5.gamedistribution.com/tospik-game-link",
+  "basketbol": "https://html5.gamedistribution.com/basketball-game-link",
+};
+
+export default function GamePage() {
+  const { slug } = useParams();
+  const src = iframeSources[slug];
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold mb-4">Oyun Yükleniyor...</h1>
+      {src ? (
+        <iframe
+          src={src}
+          title="Oyun"
+          className="w-full h-[600px] border rounded"
+          allowFullScreen
+        />
+      ) : (
+        <p>Oyun bulunamadı.</p>
+      )}
+    </div>
+  );
+}
+import { useParams } from "react-router-dom";
+
+const iframeSources = {
+  "ates-ve-su": "https://html5.gamedistribution.com/9e5ed2f9fa7e42bca591cae424b7428b/?gd_sdk_referrer_url=https://www.oyunskor.com/",
+  "zombi-kacisi": "https://html5.gamedistribution.com/zombi-game-link",
+  "park-etme": "https://html5.gamedistribution.com/parking-game-link",
+  "kurt-tospik": "https://html5.gamedistribution.com/tospik-game-link",
+  "basketbol": "https://html5.gamedistribution.com/basketball-game-link",
+};
+
+export default function GamePage() {
+  const { slug } = useParams();
+  const src = iframeSources[slug];
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold mb-4">Oyun Yükleniyor...</h1>
+      {src ? (
+        <iframe
+          src={src}
+          title="Oyun"
+          className="w-full h-[600px] border rounded"
+          allowFullScreen
+        />
+      ) : (
+        <p>Oyun bulunamadı.</p>
+      )}
+    </div>
+  );
+}
+module.exports = {
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+{
+  "name": "iyi-oyun-oyna",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.2",
+    "react-scripts": "5.0.1"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.0",
+    "postcss": "^8.4.21",
+    "autoprefixer": "^10.4.14"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  }
+}
